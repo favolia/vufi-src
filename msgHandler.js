@@ -1684,79 +1684,37 @@ ${!groupsPremium || listGroupsPremium == '' ? '- kosong -' : listGroupsPremium}`
         
         break;
 
-      case 'link':
-        if (!(isOwner)) return;
+      // case 'link':
+      //   if (!(isOwner)) return;
 
-       // await vufi.sendMessage()
-        const Link = async () => {
+      //  // await vufi.sendMessage()
+      //   const Link = async () => {
           
-          vufi.sendMessage(from, {
-            forward: {
-              key: { fromMe: isMe },
-              message: {
-                extendedTextMessage: {
-                  text: "https://www.instagram.com/defavolia/",
-                  matchedText: 'https://www.instagram.com/defavolia/',
-                  canonicalUrl: 'wa.me/settings',
-                  renderLargerUrl: true,
-                  title: " ",
-                  description: 'Lahhh',
-                  jpegThumbnail: fs.readFileSync('./img/atom.png'),
-                  // previewType: 0
-                }
-              }
-            }
-          })
+      //     vufi.sendMessage(from, {
+      //       forward: {
+      //         key: { fromMe: isMe },
+      //         message: {
+      //           extendedTextMessage: {
+      //             text: "https://www.instagram.com/defavolia/",
+      //             matchedText: 'https://www.instagram.com/defavolia/',
+      //             canonicalUrl: 'wa.me/settings',
+      //             renderLargerUrl: true,
+      //             title: " ",
+      //             description: 'Lahhh',
+      //             jpegThumbnail: fs.readFileSync('./img/atom.png'),
+      //             // previewType: 0
+      //           }
+      //         }
+      //       }
+      //     })
           
-        }
+      //   }
 
-        Link()
-        break;
-
-      case 'sch':
-        if (!(isOwner)) return;
-
-        // const sch = {
-        //   scheduledCallCreationMessage: {
-        //       callType: 1,
-        //       scheduledTimestampMs: null,
-        //       title: 'Test'
-        //   }
-        // }
-
-        const sch = {
-            forward: {
-              key: { fromMe: isMe },
-              message: {
-                  extendedTextMessage: {
-                      text: 'test'
-                  }
-                }
-              }
-            }
-
-        await vufi.sendMessage(from, sch, {quoted: m})
-        
-        break;
+      //   Link()
+      //   break;
 
       case 'fake':
         if (!(isOwner)) return;
-
-    // vufi.relayMessage(from, {
-    // extendedTextMessage: {
-    //       text: menuList({ username: pushName }), contextInfo: {
-    //           externalAdReply: {
-    //             title: `𝙑𝙪𝙛𝙞 𝙗𝙤𝙩 𝙗𝙮 { 𝙙𝙚𝙛𝙖𝙫𝙤𝙡𝙞𝙖 }`,
-    //             body: '𝘉𝘦𝘭𝘪 𝘧𝘪𝘵𝘶𝘳 𝘱𝘳𝘦𝘮𝘪𝘶𝘮 𝘣𝘰𝘵 𝘥𝘪𝘴𝘪𝘯𝘪',
-    //             mediaType: 1,
-    //             previewType: 0,
-    //             renderLargerThumbnail: true,
-    //             thumbnail: convertToUint8Array('./img/vufi.jpeg'),
-    //             sourceUrl: 'https://instagram.com/defavolia',
-    //             showAdAttribution: true
-    //                     }
-    //     }, mentions: from
-    // }}, {})
 
         vufi.relayMessage(from, {
           extendedTextMessage: {
@@ -1814,98 +1772,9 @@ ${!groupsPremium || listGroupsPremium == '' ? '- kosong -' : listGroupsPremium}`
         
         break;
 
-      case 'k':
-
-        actionGroup({})
-        
-        break;
-
-      case 'template':
-
-const templates = {
-  message: {
-    templateMessage: {
-      hydratedFourRowTemplate: {
-        hydratedButtons: [
-          {
-            urlButton: {
-              displayText: 'ig dais',
-              url: 'https://instagram.com/defavolia'
-            },
-            index: 0
-          }
-        ],
-        imageMessage: {
-          mimetype: 'image/jpeg',
-          caption: 'testttt',
-          jpegThumbnail: convertToUint8Array('./img/vufi.jpeg')
-        },
-        hydratedContentText: 'dais content text',
-        hydratedFooterText: 'dais footer'
-      },
-      hydratedTemplate: {
-        hydratedButtons: [
-          {
-            urlButton: {
-              displayText: 'ig dais',
-              url: 'https://instagram.com/defavolia'
-            },
-            index: 0
-          }
-        ],
-        imageMessage: {
-          mimetype: 'image/jpeg',
-          caption: 'testttt',
-          jpegThumbnail: convertToUint8Array('./img/vufi.jpeg')
-        },
-        hydratedContentText: 'dais content text',
-        hydratedFooterText: 'dais footer'
-      },
-      // templateId: '764162288624681',
-    }
-  }
-}
-        // const templates = {
-        //   generateWAMessageFromContent(from, proto.Message.fromObject({}))
-        // }
-
-        await vufi.sendMessage(from, templates, {})
-        
-        break;
-
 
     }
 
-
-    // vufi.sendMessage(from, m.message.viewOnceMessageV2.message)
-
-    //           if(m.message.viewOnceMessageV2) {
-    //          let buffer = await downloadMediaMessage(m, "buffer", {}, {
-    //     logger
-    // })
-    //             if(m.message.viewOnceMessageV2.message.videoMessage) {
-
-    //           vufi.sendMessage(from, {text: 'viewOnce terdeteksi'})
-    //           await vufi.sendMessage(from,  {video: buffer} ,{
-    //                     quoted: m
-    //                 })
-
-    //             } else if(m.message.viewOnceMessageV2.message.imageMessage) {
-
-    //           vufi.sendMessage(from, {text: 'viewOnce terdeteksi'})
-    //           await vufi.sendMessage(from,  {image: buffer} ,{
-    //                     quoted: m
-    //                 })
-
-    //             }
-
-    //           }
-
-    // await sosmedHandler(vufi, m, from, msg)
-    // await stickerHandler(vufi, m, from, msg, isPremium)
-    // await ownerCommand(vufi, m, from, msg, isOwner)
-
-    // }
   } catch (err) {
     see(err)
   }
