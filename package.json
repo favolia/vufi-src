@@ -1,0 +1,41 @@
+{
+  "name": "nodejs",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@adiwajshing/keyed-db": "^0.2.4",
+    "@hapi/boom": "^10.0.1",
+    "@nechlophomeriaa/free-chatgpt": "^1.0.6",
+    "@phaticusthiccy/open-apis": "^1.8.5",
+    "@subnik/socialmedia-scraper": "^0.0.20-beta-3",
+    "@types/node": "^18.0.6",
+    "@whiskeysockets/baileys": "^6.0.0",
+    "@yimura/scraper": "^1.2.4",
+    "axios": "^1.3.4",
+    "buffer-url": "^1.0.0",
+    "caliph-api": "^1.0.0",
+    "chalk": "^4.0.0",
+    "express": "^4.18.2",
+    "hdiiofficial": "^1.1.1",
+    "insta-scraper": "^1.0.2",
+    "jimp": "^0.16.13",
+    "kyouka-api": "^1.3.5",
+    "nishino-project": "^1.2.1",
+    "node-fetch": "^3.2.6",
+    "openai": "^3.2.1",
+    "pino": "^8.11.0",
+    "qrcode-terminal": "^0.12.0",
+    "rembg-node": "^2.0.1",
+    "sharp": "^0.30.7",
+    "telegraph-uploader": "^2.0.0",
+    "vihangayt-fbdl": "^1.0.2",
+    "youtube-stream-url": "^2.4.1"
+  }
+}
