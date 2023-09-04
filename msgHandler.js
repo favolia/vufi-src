@@ -44,12 +44,12 @@ const chalk = require('chalk')
 const axios = require('axios')
 const { uploadByBuffer } = require('telegraph-uploader')
 const Nishino = require('nishino-project')
-const hdiiofficial = require('hdiiofficial')
+// const hdiiofficial = require('hdiiofficial')
 const path = require('path')
 const Youtube = require('youtube-stream-url');
 const Scraper = require('@yimura/scraper').default;
-const ai = require('@nechlophomeriaa/free-chatgpt')
-const {convertToUint8Array} = require('./lib/gaje/fungsiGaje')
+const ai = require('@nechlophomeriaa/chatgpt')
+const { convertToUint8Array } = require('./lib/gaje/fungsiGaje')
 
 
 const $get = async (input_link) => {
@@ -59,7 +59,7 @@ const $get = async (input_link) => {
   } catch (err) {
     return err
   }
-   
+
 }
 
 // ------------------------------------------------------- //
@@ -143,9 +143,9 @@ const formatNum = Intl.NumberFormat('en', {
 const msgHandler = async (vufi, messages) => {
 
   await delay(2000)
-  
+
   const m = messages[0]
-  see(m)
+  // see(m)
   // see(m.message?.extendedTextMessage?.contextInfo.quotedMessage)
 
   const isMe = m.key.fromMe
@@ -161,17 +161,17 @@ const msgHandler = async (vufi, messages) => {
     const businessMsgType = Object.keys(m.message)[2]
     // see(messageType)
 
-    if(m.message?.extendedTextMessage?.matchedText) return;
+    if (m.message?.extendedTextMessage?.matchedText) return;
 
 
 
-    
+
     var msg = m.message?.conversation ? m.message.conversation : m
       .message.extendedTextMessage ? m.message.extendedTextMessage
       .text : m.message.imageMessage ? m.message.imageMessage
         .caption : m.message.documentMessage ? m.message
           .documentMessage.caption : null;
-    
+
 
     const prefix = /^[°•π÷×¶∆£¢€¥®™✓=|~`,*zxcv!?@#$%^&.\/\\©^]/.test(msg) ? msg.match(/^[!?#$,^.,/\/\\©^]/gi) : '-'
 
@@ -202,21 +202,24 @@ const msgHandler = async (vufi, messages) => {
         .contextInfo.participant : null : q + '@s.whatsapp.net'
 
 
-    const actionGroup = async ({ targetNumber = phoneNum?.replace('@s.whatsapp.net', '')}) => {
+    const actionGroup = async ({ targetNumber = phoneNum?.replace('@s.whatsapp.net', '') }) => {
       const [IsOnWhatsapp] = await vufi.onWhatsApp(targetNumber)
-      if (IsOnWhatsapp?.exists) {console.log (`${targetNumber} exists on WhatsApp, as jid: ${IsOnWhatsapp.jid}`)
-          } else {
-            reply('gada')
-          }
+      if (IsOnWhatsapp?.exists) {
+        console.log(`${targetNumber} exists on WhatsApp, as jid: ${IsOnWhatsapp.jid}`)
+      } else {
+        reply('gada')
+      }
       // see(IsOnWhatsapp)
     }
 
-    
-    
-    
+
+
+
     if (isMe) return;
-    
-  // log session
+    if (!isOwner) return;
+
+
+    // log session
 
     const _log = {
       userNumber: usersID?.replace('@s.whatsapp.net', ''),
@@ -226,13 +229,13 @@ const msgHandler = async (vufi, messages) => {
     }
 
     // see({ groupDetail });
-    if(command) see(chalk`{green » {cyan ${_log.userNumber} ${_log.username}}} {yellowBright » } {${usersID.includes(ownerNumber) ? 'red' : 'white'} ${'.'+command}} {white ${q ? q : ''}}`);
+    if (command) see(chalk`{green » {cyan ${_log.userNumber} ${_log.username}}} {yellowBright » } {${usersID.includes(ownerNumber) ? 'red' : 'white'} ${'.' + command}} {white ${q ? q : ''}}`);
 
-    
-  // end log session
+
+    // end log session
 
     const reply = async (text) => {
-    
+
       vufi.sendMessage(from, {
         text: text
       }, {
@@ -241,14 +244,14 @@ const msgHandler = async (vufi, messages) => {
     }
 
     const sendMsg = async (text) => {
-      
+
       vufi.sendMessage(from, {
         text: text
       })
     }
 
     const sendAudio = async (text) => {
-      
+
       await vufi.sendMessage(from, { audio: { url: text }, mimetype: 'audio/mp4', fileName: 'lol' }, { quoted: m })
     }
 
@@ -263,28 +266,29 @@ const msgHandler = async (vufi, messages) => {
 
 
     function sendMenu() {
-      
+
       vufi.relayMessage(from, {
-      extendedTextMessage: {
-            text: menuList({ username: pushName }), contextInfo: {
-                mentionedJid: [usersID],
-                externalAdReply: {
-                  title: `𝙑𝙪𝙛𝙞 𝙗𝙤𝙩 𝙗𝙮 { 𝙙𝙚𝙛𝙖𝙫𝙤𝙡𝙞𝙖 }`,
-                  body: '𝘉𝘦𝘭𝘪 𝘧𝘪𝘵𝘶𝘳 𝘱𝘳𝘦𝘮𝘪𝘶𝘮 𝘣𝘰𝘵 𝘥𝘪𝘴𝘪𝘯𝘪',
-                  mediaType: 1,
-                  previewType: 0,
-                  renderLargerThumbnail: true,
-                  thumbnail: convertToUint8Array('./img/vufi.jpeg'),
-                  sourceUrl: 'https://instagram.com/defavolia',
-                  showAdAttribution: true
+        extendedTextMessage: {
+          text: menuList({ username: pushName }), contextInfo: {
+            mentionedJid: [usersID],
+            externalAdReply: {
+              title: `𝙑𝙪𝙛𝙞 𝙗𝙤𝙩 𝙗𝙮 { 𝙙𝙚𝙛𝙖𝙫𝙤𝙡𝙞𝙖 }`,
+              body: '𝘉𝘦𝘭𝘪 𝘧𝘪𝘵𝘶𝘳 𝘱𝘳𝘦𝘮𝘪𝘶𝘮 𝘣𝘰𝘵 𝘥𝘪𝘴𝘪𝘯𝘪',
+              mediaType: 1,
+              previewType: 0,
+              renderLargerThumbnail: true,
+              thumbnail: convertToUint8Array('./img/vufi.jpeg'),
+              sourceUrl: 'https://instagram.com/defavolia',
+              showAdAttribution: true
             }
           },
-      }}, {})
+        }
+      }, {})
 
     }
 
     const premiumMsg = async () => {
-      
+
       await vufi.sendMessage(from, {
         text: `
 𝘈𝘬𝘴𝘦𝘴 𝘧𝘪𝘵𝘶𝘳 𝘵𝘦𝘳𝘴𝘦𝘣𝘶𝘵 𝘩𝘢𝘯𝘺𝘢 𝘶𝘯𝘵𝘶𝘬 𝘗𝘳𝘦𝘮𝘪𝘶𝘮.
@@ -298,7 +302,7 @@ ${ownerIg}
     }
 
     // const sendLaugh = async () => {
-      
+
     //   await vufi.sendMessage(from, {
     //     react: {
     //       text: "😂",
@@ -308,8 +312,8 @@ ${ownerIg}
     // }
 
     const sendWait = async () => {
-      
-     const vufi_chat = await vufi.sendMessage(from, {
+
+      const vufi_chat = await vufi.sendMessage(from, {
         text: "_waittt..._"
       }, {
         quoted: m
@@ -320,7 +324,7 @@ ${ownerIg}
     }
 
     const sendImgCap = async (img, caption) => {
-      
+
       await vufi.sendMessage(from, {
         image: {
           url: img
@@ -332,16 +336,16 @@ ${ownerIg}
     }
 
     const sendVideoCap = async ({ video, caption }) => {
-          
-          await vufi.sendMessage(from, {
-              video: {
-                url: video
-              },
-              caption: caption,
-              jpegThumbnail: null,
-            }, {
-              quoted: m
-            })
+
+      await vufi.sendMessage(from, {
+        video: {
+          url: video
+        },
+        caption: caption || '-',
+        jpegThumbnail: null,
+      }, {
+        quoted: m
+      })
     }
 
     // cuman bisa pesat text / only text message
@@ -353,7 +357,7 @@ ${ownerIg}
         fromMe: kiy.fromMe,
         id: kiy.id
       }
-      
+
       await vufi.relayMessage(from, {
         protocolMessage: {
           key: keys,
@@ -368,13 +372,13 @@ ${ownerIg}
 
 
     const sendGroupInfo = async () => {
-      if(!isGroup) return reply('Maaf anda sendang tidak di group');
+      if (!isGroup) return reply('Maaf anda sendang tidak di group');
       const groupInfo = await vufi.groupMetadata(from);
       const ppGroup = await vufi.profilePictureUrl(from, 'image')
 
 
       const groupParticipants = groupInfo.participants.map(member => `${member.id.replace(/@s.whatsapp.net/g, '')} => ${member.admin == null ? 'member' : member.admin}`)
-            
+
       sendImgCap(ppGroup, `
 ${groupInfo.subject || '-'}
 
@@ -385,8 +389,8 @@ Members: ${groupInfo.size || '0'}
 ${groupParticipants.join('\n')}
 `)
 
-      
-      
+
+
     }
 
 
@@ -433,13 +437,14 @@ ${groupParticipants.join('\n')}
       case 'lyric':
       case 'lyrics':
         if (!q) {
-         return reply(`kirim judul lagunya
+          return reply(`kirim judul lagunya
 
-ex: ${prefix + command} i love you 300`)};
+ex: ${prefix + command} i love you 300`)
+        };
         sendWait()
 
         try {
-          const lirik = await searchLyrics({query: q})
+          const lirik = await searchLyrics({ query: q })
           reply(`
 artist: ${lirik.artist || '-'}
 title: ${lirik.title || '-'}
@@ -450,9 +455,9 @@ ${lirik.lyrics.join('\n') || 'error'}
           see(err)
           reply('Lirik ga ketemu.')
         }
-        
-        
-       break;
+
+
+        break;
 
       case 'ffid':
       case 'freefireid':
@@ -522,8 +527,8 @@ ${siapaAku.result.pertanyaan}
 jawab dalam 15 detik
 `)
           await delay(15000)
-          
-            sendMsg(`
+
+          sendMsg(`
 jawaban: *${siapaAku.result.jawaban}*  
 `)
 
@@ -572,31 +577,31 @@ Url: ${ytsearch?.result?.youtube_url}
         }
         break;
 
-      case 'mlid': case 'mobilelegends': case 'mobelejen':
-        if (!q) {
-          reply(`kirim id mobile legends dan id servernya
+      //       case 'mlid': case 'mobilelegends': case 'mobelejen':
+      //         if (!q) {
+      //           reply(`kirim id mobile legends dan id servernya
 
-ex: ${prefix + command} 109088431 | 2558
-`);
-          return;
-        }
-        sendWait()
+      // ex: ${prefix + command} 109088431 | 2558
+      // `);
+      //           return;
+      //         }
+      //         sendWait()
 
-        const mlid = q.split("|")
+      //         const mlid = q.split("|")
 
-        try {
-          const _ML = await hdiiofficial.game.nickNameMobileLegends(mlid[0], mlid[1])
-          reply(`
-*username:* ${_ML.userName}
-`)
-        } catch (error) {
-          reply(`
-user ga ketemu
-`)
-        }
+      //         try {
+      //           const _ML = await hdiiofficial.game.nickNameMobileLegends(mlid[0], mlid[1])
+      //           reply(`
+      // *username:* ${_ML.userName}
+      // `)
+      //         } catch (error) {
+      //           reply(`
+      // user ga ketemu
+      // `)
+      //         }
 
 
-        break;
+      //         break;
 
       case 'ytaudio':
         if (!q) {
@@ -619,7 +624,7 @@ user ga ketemu
 
 
         break;
-        
+
       case 'mp3':
         if (!q) {
           reply('kirim link audio');
@@ -650,14 +655,14 @@ user ga ketemu
 
       //         const start_server = await start()
       //         reply(start_server)
-            
+
       //       break;
 
       //     case 'stop':
 
       //         const stop_server = await stop()
       //         reply(`${stop_server}`)
-              
+
       //       break;
 
       //     case 'reset':
@@ -665,16 +670,16 @@ user ga ketemu
 
       //       const restart_server = await reset()
       //         reply(`${restart_server}`)
-            
+
       //       break;
 
       //     default:
 
       //       reply(`maaf query ${q} tidak ada, masukkan start/restart/stop`)
-              
+
       //       break;
       //   }
-        
+
       //   // const server_response 
 
       //   break;
@@ -690,10 +695,10 @@ user ga ketemu
       case 'stiker':
       case 'sticker':
       case 'stic':
-        if (!(isUserPremium || isGroupPremium || isOwner)) return premiumMsg();      
+        if (!(isUserPremium || isGroupPremium || isOwner)) return premiumMsg();
         if (!(m.message.imageMessage)) return reply(`kirim gambar dengan caption ${prefix + command}`);
-        
-        
+
+
         // reply( m.message.documentMessage.caption)
         sendWait()
         await sticker(vufi, from, m)
@@ -740,28 +745,28 @@ ex: ${prefix + command} apa itu orientasi`);
 
         break;
 
-//       case 'img':
-//       case 'imagine':
-//       case 'gambar':
-//       case 'dalle':
-//         if (!(isUserPremium || isGroupPremium || isOwner)) {
-//           premiumMsg();
-//           return
-//         };
-//         if (!q) {
-//           reply(`kirim textnya
-        
-// ex: ${prefix + command} astronout`);
-//           return
-//         };
-//         sendWait()
-//         const dalle = await imagine(q)
-//         dalleResponse(q, dalle).catch((err) => {
-//           see(err)
-//           reply('ada kesalahan')
-//         })
+      //       case 'img':
+      //       case 'imagine':
+      //       case 'gambar':
+      //       case 'dalle':
+      //         if (!(isUserPremium || isGroupPremium || isOwner)) {
+      //           premiumMsg();
+      //           return
+      //         };
+      //         if (!q) {
+      //           reply(`kirim textnya
 
-//         break;
+      // ex: ${prefix + command} astronout`);
+      //           return
+      //         };
+      //         sendWait()
+      //         const dalle = await imagine(q)
+      //         dalleResponse(q, dalle).catch((err) => {
+      //           see(err)
+      //           reply('ada kesalahan')
+      //         })
+
+      //         break;
 
       case 'reels':
       case 'igreels':
@@ -790,7 +795,7 @@ ex: ${prefix + command} https://www.instagram.com/reel/CqMxS53g_wX/?igshid=YmMyM
             caption: `
 ${reelsIG.data.details.title}
 `,
-              jpegThumbnail: null,
+            jpegThumbnail: null,
           }, {
             quoted: m
           })
@@ -1069,7 +1074,7 @@ Duration: *${calculateSeconds(Number(objResult.videoDetails.lengthSeconds)) || '
 
       case 'smeme':
         if (!(isUserPremium || isGroupPremium || isOwner)) return premiumMsg();
-        if(q.includes('?')) return reply("jangan gunakan tanda tanya '?'");
+        if (q.includes('?')) return reply("jangan gunakan tanda tanya '?'");
         if (!(m.message.imageMessage)) {
           reply(`kirim gambar dengan caption ${prefix + command} topText | bottomText`);
           return;
@@ -1239,30 +1244,30 @@ bio: ${ttUser.userInfo.signature}
         sendWait()
 
         try {
-      
-      
+
+
           const igstalk = await axios.get(`${EXTRA_API}/igstalk?username=${q}`)
 
-          if(igstalk.data.error) {
-             return reply(`maaf user *${q}* ga ketemu.`);
+          if (igstalk.data.error) {
+            return reply(`maaf user *${q}* ga ketemu.`);
           }
 
           const bio_links = igstalk?.data?.bio_links.map(res => res.url).join('\n')
-          
-          sendImgCap(igstalk.data.profile_pic[1] ? igstalk.data.profile_pic[1].url : igstalk.data.profile_pic[0].url , `instagram.com/${igstalk.data.username}
+
+          sendImgCap(igstalk.data.profile_pic[1] ? igstalk.data.profile_pic[1].url : igstalk.data.profile_pic[0].url, `instagram.com/${igstalk.data.username}
           
 username: *${igstalk.data.username}*        
-name: ${'*'+igstalk.data.name+'*' || ''}
-category: ${'*'+igstalk.data.category+'*' || ''}
+name: ${'*' + igstalk.data.name + '*' || ''}
+category: ${'*' + igstalk.data.category + '*' || ''}
 visibility: ${igstalk.data.is_private ? '*Private*' : '*Public*'}
 posts: *${igstalk.data.post}*
 followers: *${igstalk.data.followers}*
 following: *${igstalk.data.following}*
 bio links: ${bio_links || '-'}
-${'\n'+igstalk.data.biography+'\n' || ''}`).catch(err =>  reply(`maaf username ig *${q}* ga ketemu.`))
+${'\n' + igstalk.data.biography + '\n' || ''}`).catch(err => reply(`maaf username ig *${q}* ga ketemu.`))
 
           // see(igstalk.data)
-      
+
 
         } catch (err) {
           see(err)
@@ -1286,41 +1291,41 @@ ${'\n'+igstalk.data.biography+'\n' || ''}`).catch(err =>  reply(`maaf username i
         sendWait()
 
         try {
-      
-      
+
+
           const getStories = await axios.get(`${EXTRA_API}/igstories?username=${q}`)
-          
+
           const stories = getStories.data
-          
+
           const count_video_igsg = stories?.filter(res => res.type == 'video').length
           const count_image_igsg = stories?.filter(res => res.type == 'image').length
-          
+
           let stories_link = `${String(stories.length)} stories = ${String(count_image_igsg)} images ${count_video_igsg} videos
 other stories will be here:\n\n `;
 
-         await stories.map((item, index) => {
-            if(index > 0) {
-              return stories_link += `${item.type} ${String(index+1)}\n${item.url}\n\n`;
+          await stories.map((item, index) => {
+            if (index > 0) {
+              return stories_link += `${item.type} ${String(index + 1)}\n${item.url}\n\n`;
             }
-            
-            if(item.type === 'image') {
+
+            if (item.type === 'image') {
               sendImgCap(item.url, `instagram.com/${q}`)
             } else {
-              sendVideoCap({ video: item.url, caption: `${item.type} ${String(index+1)} instagram.com/${q}`})
+              sendVideoCap({ video: item.url, caption: `${item.type} ${String(index + 1)} instagram.com/${q}` })
             }
-            
+
           })
 
-reply(stories_link)
-          
+          reply(stories_link)
 
-//           const list_stories = getStories.data.map(key => `${key.type}\n${key.url}\n\n`)
-          
 
-//           reply(`
-// ${stories.length} stories = ${count_video_igsg} video ${count_image_igsg} image
+          //           const list_stories = getStories.data.map(key => `${key.type}\n${key.url}\n\n`)
 
-// ${list_stories}`)
+
+          //           reply(`
+          // ${stories.length} stories = ${count_video_igsg} video ${count_image_igsg} image
+
+          // ${list_stories}`)
 
 
           see(stories)
@@ -1333,8 +1338,8 @@ reply(stories_link)
 
         break;
 
-  
-        
+
+
 
       case 'spotify':
         if (!(isUserPremium || isGroupPremium || isOwner)) {
@@ -1363,7 +1368,7 @@ preview track:
 ${spotify.data.details.preview_mp3}
 
 _waittt for the audio..._
-`).catch(err =>  reply(`maaf spotify *${q}* ga ketemu.`))
+`).catch(err => reply(`maaf spotify *${q}* ga ketemu.`))
 
           sendAudio(spotify.data.track).catch(err => reply('audio not found.'))
 
@@ -1391,7 +1396,7 @@ _waittt for the audio..._
           see(simiApi.data)
 
           reply(simiApi.data.success)
-          
+
         } catch (err) {
 
           reply(`maaf terjadi kesalahan.`)
@@ -1411,24 +1416,24 @@ _waittt for the audio..._
           );
           return
         }
-        
+
         sendWait()
 
         try {
 
-            const ttData = await axios.get(`${EXTRA_API}/tiktok?url=${q}`)
+          const ttData = await axios.get(`${EXTRA_API}/tiktok?url=${q}`)
 
-            vufi.sendMessage(from, {
-              video: {
-                url: ttData.data.video
-              },
-              caption: `
+          vufi.sendMessage(from, {
+            video: {
+              url: ttData.data.video
+            },
+            caption: `
 ${ttData?.data.details.title}
 `,
-              jpegThumbnail: null,
-            }, {
-              quoted: m
-            })
+            jpegThumbnail: null,
+          }, {
+            quoted: m
+          })
 
         } catch (err) {
 
@@ -1460,10 +1465,10 @@ ${ttData?.data.details.title}
             video: {
               url: fbData.data.video
             },
-              jpegThumbnail: null,
+            jpegThumbnail: null,
           }, {
             quoted: m
-          }).catch(err => reply('error '+ err))
+          }).catch(err => reply('error ' + err))
 
         } catch (err) {
 
@@ -1486,15 +1491,15 @@ ${ttData?.data.details.title}
           );
           return
         }
-        
+
         sendWait()
 
         try {
 
-            const ttDataAudio = await axios.get(`${EXTRA_API}/tiktok?url=${q}`)
+          const ttDataAudio = await axios.get(`${EXTRA_API}/tiktok?url=${q}`)
 
           sendAudio(ttDataAudio.data.audio)
-          
+
         } catch (err) {
 
           reply('something wrong')
@@ -1515,15 +1520,15 @@ ${ttData?.data.details.title}
           );
           return
         }
-        
+
         sendWait()
 
         try {
 
-            const aiResponse = await ai(q)
+          const aiResponse = await ai(q)
 
           sendMsg(aiResponse)
-          
+
         } catch (err) {
 
           reply('something wrong')
@@ -1536,8 +1541,8 @@ ${ttData?.data.details.title}
 
 
     // admin menu
-    switch(command) {
-        
+    switch (command) {
+
       case 'infogrup':
       case 'infogroup':
       case 'groupinfo':
@@ -1547,7 +1552,7 @@ ${ttData?.data.details.title}
 
         break;
     }
-    
+
 
     // owner commands
     switch (command) {
@@ -1657,31 +1662,31 @@ ${!groupsPremium || listGroupsPremium == '' ? '- kosong -' : listGroupsPremium}`
 
       case 'eval':
         if (!(isOwner)) return;
-        if(!q) return reply('kirim kode javascript');
+        if (!q) return reply('kirim kode javascript');
 
         try {
 
-        const evaluated = await safeEval(q)
+          const evaluated = await safeEval(q)
           see(evaluated)
-        reply(String(evaluated))
-   
+          reply(String(evaluated))
+
         } catch (err) {
           see(err)
           reply(err.toString())
         }
-        
+
         break;
 
       case 'exec':
         if (!(isOwner)) return;
-        if(!q) return reply('kirim kode execute');
+        if (!q) return reply('kirim kode execute');
 
-          const exec_response = await sendWait()
-        
-          const exec_result = await exec(q)
+        const exec_response = await sendWait()
 
-          editMsg({ response: exec_response, new_msg: exec_result })
-        
+        const exec_result = await exec(q)
+
+        editMsg({ response: exec_response, new_msg: exec_result })
+
         break;
 
       // case 'link':
@@ -1689,7 +1694,7 @@ ${!groupsPremium || listGroupsPremium == '' ? '- kosong -' : listGroupsPremium}`
 
       //  // await vufi.sendMessage()
       //   const Link = async () => {
-          
+
       //     vufi.sendMessage(from, {
       //       forward: {
       //         key: { fromMe: isMe },
@@ -1707,7 +1712,7 @@ ${!groupsPremium || listGroupsPremium == '' ? '- kosong -' : listGroupsPremium}`
       //         }
       //       }
       //     })
-          
+
       //   }
 
       //   Link()
@@ -1736,23 +1741,23 @@ ${!groupsPremium || listGroupsPremium == '' ? '- kosong -' : listGroupsPremium}`
           }
         }, {})
 
-        
-        
+
+
         break;
 
       case 'ev':
         if (!(isOwner)) return;
-        if(!q) return reply('kirim kode javascript');
+        if (!q) return reply('kirim kode javascript');
 
-					try {
-						let evaled = await eval(q)
-						if (typeof evaled !== 'string') evaled = require('util').inspect(evaled)
-						reply(`» ${evaled}`)
-					} catch (err) {
-						console.error(err)
-						reply(`» Error: ${err.message}`)
-					}
-        
+        try {
+          let evaled = await eval(q)
+          if (typeof evaled !== 'string') evaled = require('util').inspect(evaled)
+          reply(`» ${evaled}`)
+        } catch (err) {
+          console.error(err)
+          reply(`» Error: ${err.message}`)
+        }
+
         break;
 
       case 'poll':
@@ -1768,8 +1773,8 @@ ${!groupsPremium || listGroupsPremium == '' ? '- kosong -' : listGroupsPremium}`
             ]
           }
         })
-        
-        
+
+
         break;
 
 

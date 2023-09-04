@@ -13,7 +13,7 @@
   "dependencies": {
     "@adiwajshing/keyed-db": "^0.2.4",
     "@hapi/boom": "^10.0.1",
-    "@nechlophomeriaa/free-chatgpt": "^1.0.6",
+    "@nechlophomeriaa/chatgpt": "^0.0.2",
     "@phaticusthiccy/open-apis": "^1.8.5",
     "@subnik/socialmedia-scraper": "^0.0.20-beta-3",
     "@types/node": "^18.0.6",
@@ -24,7 +24,6 @@
     "caliph-api": "^1.0.0",
     "chalk": "^4.0.0",
     "express": "^4.18.2",
-    "hdiiofficial": "^1.1.1",
     "insta-scraper": "^1.0.2",
     "jimp": "^0.16.13",
     "kyouka-api": "^1.3.5",
