@@ -72,11 +72,11 @@ const azharim = 'https://song-lyrics-api.azharimm.dev'
 const timeStamp = String(Date.now())
 
 const ownerNumber = [
-  '628875090455@s.whatsapp.net',
-  '6289529753080@s.whatsapp.net'
+  '62***********@s.whatsapp.net',
+  '62***********@s.whatsapp.net'
 ]
 
-const botNumber = '6288804225115@s.whatsapp.net'
+const botNumber = '62***********@s.whatsapp.net'
 
 const blockPath = './database/usersBlock.json';
 const premiumUsersPath = './database/premiumUsers.json';
