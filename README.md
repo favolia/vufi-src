@@ -1,3 +1,6 @@
+<h1>DEPRECATED</h1>
+<hr />
+
 <h1>Install depedensi yang dibutuhkan</h1>
 <p>npm install</p>
 
